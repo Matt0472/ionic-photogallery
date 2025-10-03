@@ -45,9 +45,12 @@ import {
   IonImg,
 } from '@ionic/vue';
 import { usePhotoGallery } from "@/composables/usePhotoGallery";
-
-
 const { takePhoto, deletePhoto, photos } = usePhotoGallery();
+
+export interface UserPhoto {
+  filepath: string;
+  webviewPath?: string;
+}
 
 const showActionSheet = async (photo: UserPhoto) => {
   const actionSheet = await actionSheetController.create({

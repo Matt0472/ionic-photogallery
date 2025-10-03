@@ -119,6 +119,7 @@ export const usePhotoGallery = () => {
 
     return {
         takePhoto,
-        deletePhoto
+        deletePhoto,
+        photos,
     };
 };
