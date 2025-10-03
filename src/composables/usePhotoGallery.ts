@@ -1,11 +1,9 @@
-import { onMounted, watch } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 import { isPlatform } from '@ionic/vue';
 import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
 import { Filesystem, Directory } from '@capacitor/filesystem';
 import { Capacitor } from '@capacitor/core';
 import { Preferences } from '@capacitor/preferences';
-import { usePhotosStore } from '../stores/photosStore';
-import { storeToRefs } from "pinia";
 
 const PHOTO_STORAGE = 'photos';
 
@@ -15,8 +13,7 @@ export interface UserPhoto {
 }
 
 export const usePhotoGallery = () => {
-    const { addPhoto, setPhotos, deletePhoto } = usePhotosStore();
-    const { photos } = storeToRefs(usePhotosStore());
+    const photos = ref<UserPhoto[]>([]);
     const takePhoto = async () => {
         const photo = await Camera.getPhoto({
             resultType: CameraResultType.Uri,
@@ -27,7 +24,7 @@ export const usePhotoGallery = () => {
         const fileName = Date.now() + '.jpeg';
         const savedFileImage = await savePicture(photo, fileName);
 
-        addPhoto(savedFileImage);
+        photos.value.push(savedFileImage);
     };
 
     const convertBlobToBase64 = (blob: Blob) =>
@@ -77,9 +74,9 @@ export const usePhotoGallery = () => {
         }
     };
 
-    const deletePicture = async (photo: UserPhoto) => {
+    const deletePhoto = async (photo: UserPhoto) => {
         // Remove this photo from the Photos reference data array
-        deletePhoto(photo);
+        photos.value = photos.value.filter((p) => p.filepath !== photo.filepath);
 
         // delete photo file from filesystem
         const filename = photo.filepath.substr(photo.filepath.lastIndexOf('/') + 1);
@@ -112,7 +109,8 @@ export const usePhotoGallery = () => {
             }
         }
 
-        setPhotos(photosInPreferences);
+        photos.value = photosInPreferences;
+
     };
 
     watch(photos, cachePhotos);
@@ -121,5 +119,6 @@ export const usePhotoGallery = () => {
 
     return {
         takePhoto,
+        deletePhoto
     };
 };

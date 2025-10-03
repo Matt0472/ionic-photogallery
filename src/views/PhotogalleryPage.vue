@@ -2,13 +2,13 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-title>MP's PhotoGallery</ion-title>
+        <ion-title>MP's Photo Gallery</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
       <ion-header collapse="condense">
         <ion-toolbar>
-          <ion-title size="large">PhotoGallery</ion-title>
+          <ion-title size="large">Photo Gallery</ion-title>
         </ion-toolbar>
       </ion-header>
       <ion-grid>
@@ -44,13 +44,10 @@ import {
   IonCol,
   IonImg,
 } from '@ionic/vue';
-import { usePhotosStore } from "../stores/photosStore";
-import { storeToRefs } from "pinia";
-import { usePhotoGallery } from "../composables/usePhotoGallery";
+import { usePhotoGallery } from "@/composables/usePhotoGallery";
 
 
-const { takePhoto, deletePhoto } = usePhotoGallery();
-const { photos } = storeToRefs(usePhotosStore());
+const { takePhoto, deletePhoto, photos } = usePhotoGallery();
 
 const showActionSheet = async (photo: UserPhoto) => {
   const actionSheet = await actionSheetController.create({
@@ -68,9 +65,6 @@ const showActionSheet = async (photo: UserPhoto) => {
         text: 'Cancel',
         icon: close,
         role: 'cancel',
-        handler: () => {
-          // Nothing to do, action sheet is automatically closed
-        },
       },
     ],
   });

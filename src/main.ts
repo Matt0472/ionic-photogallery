@@ -1,5 +1,4 @@
 import { createApp } from 'vue'
-import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router';
 
@@ -40,9 +39,8 @@ import './theme/variables.css';
 // Above the createApp() line
 defineCustomElements(window);
 
-const pinia = createPinia()
 
-const app = createApp(App).use(pinia).use(IonicVue).use(router);
+const app = createApp(App).use(IonicVue).use(router);
 
 router.isReady().then(() => {
   app.mount('#app');
