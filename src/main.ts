@@ -38,7 +38,7 @@ import '@ionic/vue/css/palettes/dark.system.css';
 import './theme/variables.css';
 
 // Above the createApp() line
-await defineCustomElements(window);
+defineCustomElements(window);
 
 const pinia = createPinia()
 
