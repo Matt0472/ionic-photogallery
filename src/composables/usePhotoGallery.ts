@@ -11,7 +11,7 @@ import {storeToRefs} from "pinia";
 const PHOTO_STORAGE = 'photos';
 
 export const usePhotoGallery = () => {
-    const { addPhoto, setPhotos } = usePhotosStore();
+    const { addPhoto, setPhotos, deletePhoto } = usePhotosStore();
     const { photos } = storeToRefs(usePhotosStore());
     const takePhoto = async () => {
         const photo = await Camera.getPhoto({
@@ -71,6 +71,18 @@ export const usePhotoGallery = () => {
                 webviewPath: photo.webPath,
             };
         }
+    };
+
+    const deletePicture = async (photo: UserPhoto) => {
+        // Remove this photo from the Photos reference data array
+        deletePhoto(photo);
+
+        // delete photo file from filesystem
+        const filename = photo.filepath.substr(photo.filepath.lastIndexOf('/') + 1);
+        await Filesystem.deleteFile({
+            path: filename,
+            directory: Directory.Data,
+        });
     };
 
     const cachePhotos = async () => {

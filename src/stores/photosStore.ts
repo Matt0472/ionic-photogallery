@@ -14,9 +14,14 @@ export const usePhotosStore = defineStore('photos', () => {
         photos.value = photos;
     }
 
+    const deletePhoto = (photo: UserPhoto) => {
+        photos.value = photos.value.filter((p) => p.filepath !== photo.filepath);
+    }
+
     return {
         photos,
         addPhoto,
-        setPhotos
+        setPhotos,
+        deletePhoto
     };
 })
