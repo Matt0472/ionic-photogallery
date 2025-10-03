@@ -4,11 +4,15 @@ import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera
 import { Filesystem, Directory } from '@capacitor/filesystem';
 import { Capacitor } from '@capacitor/core';
 import { Preferences } from '@capacitor/preferences';
-import { UserPhoto } from "@/interfaces";
-import { usePhotosStore } from '@/stores/photosStore';
-import {storeToRefs} from "pinia";
+import { usePhotosStore } from '../stores/photosStore';
+import { storeToRefs } from "pinia";
 
 const PHOTO_STORAGE = 'photos';
+
+export interface UserPhoto {
+    filepath: string;
+    webviewPath?: string;
+}
 
 export const usePhotoGallery = () => {
     const { addPhoto, setPhotos, deletePhoto } = usePhotosStore();

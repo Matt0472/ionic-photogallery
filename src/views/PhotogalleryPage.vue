@@ -44,9 +44,9 @@ import {
   IonCol,
   IonImg,
 } from '@ionic/vue';
-import { usePhotosStore } from "@/stores/photosStore";
+import { usePhotosStore } from "../stores/photosStore";
 import { storeToRefs } from "pinia";
-import { usePhotoGallery } from "@/composables/usePhotoGallery";
+import { usePhotoGallery } from "../composables/usePhotoGallery";
 
 
 const { takePhoto, deletePhoto } = usePhotoGallery();

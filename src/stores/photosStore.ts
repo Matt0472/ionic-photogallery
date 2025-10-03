@@ -1,8 +1,10 @@
 import { defineStore } from 'pinia'
 import { ref } from "vue";
-import { UserPhoto } from "@/interfaces";
-import { Camera, CameraResultType, CameraSource } from "@capacitor/camera";
 
+export interface UserPhoto {
+    filepath: string;
+    webviewPath?: string;
+}
 export const usePhotosStore = defineStore('photos', () => {
     const photos = ref<UserPhoto[]>([]);
 
